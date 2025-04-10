@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import openai
+from openai import OpenAI
 import os
 from fpdf import FPDF
 from io import BytesIO
@@ -10,8 +10,8 @@ from datetime import datetime
 import smtplib
 from email.message import EmailMessage
 
-# Set your OpenAI API key here (can also use environment variable)
-openai.api_key = os.getenv("OPENAI_API_KEY") or "openrouter"
+# Initialize OpenAI client with API key
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY") or "your_fallback_key")
 
 # App title
 st.set_page_config(page_title="AI Business Report Generator", layout="wide")
@@ -97,13 +97,13 @@ if uploaded_file:
         summary = ""
         with st.spinner("Generating summary..."):
             try:
-                response = openai.ChatCompletion.create(
+                response = client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=[
                         {"role": "user", "content": prompt}
                     ]
                 )
-                summary = response['choices'][0]['message']['content']
+                summary = response.choices[0].message.content
                 st.success("Summary generated successfully!")
                 st.write(summary)
             except Exception as e:
@@ -156,7 +156,6 @@ if uploaded_file:
                         st.text(str(e))
 
         st.markdown("---")
-        st.markdown("Developed with ❤️ by YourName | Contact: you@example.com")
+        st.markdown("Developed with ❤️ by adhavan | Contact: you@example.com")
     else:
         st.warning("⚠️ Your file must have columns like 'Date', 'Revenue', and 'Expenses' (or similar names like 'Sales', 'Costs').")
-
