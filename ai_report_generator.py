@@ -156,6 +156,6 @@ if uploaded_file:
                         st.text(str(e))
 
         st.markdown("---")
-        st.markdown("Developed with ❤️ by adhavan | Contact: you@example.com")
+        st.markdown("Developed with ❤️ by adhavan | Contact: adhavansmith49@gmail.com")
     else:
         st.warning("⚠️ Your file must have columns like 'Date', 'Revenue', and 'Expenses' (or similar names like 'Sales', 'Costs').")
