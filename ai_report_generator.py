@@ -92,17 +92,21 @@ if uploaded_file:
         with st.spinner("Generating summary..."):
             try:
                 openai.api_key = st.secrets["OPENAI_API_KEY"]
-                response = openai.Completion.create(
-                    model="gpt-3.5-turbo-instruct",
-                    prompt=prompt,
+
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "system", "content": "You are a financial analyst."},
+                        {"role": "user", "content": prompt}
+                    ],
                     max_tokens=300
                 )
-                summary = response.choices[0].text.strip()
-                st.success("Summary generated successfully!")
+                summary = response['choices'][0]['message']['content'].strip()
+                st.success("✅ Summary generated successfully!")
                 st.write(summary)
+
             except Exception as e:
-                st.error("⚠️ Error generating summary. Please check your API key or quota.")
-                st.text(str(e))
+                st.error(f"⚠️ Failed to generate summary: {e}")
 
         st.subheader("📄 Download Report as PDF")
         if st.button("Generate PDF"):
