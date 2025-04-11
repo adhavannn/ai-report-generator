@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from openai import OpenAI
+import openai
 import os
 from fpdf import FPDF
 from io import BytesIO
@@ -10,8 +10,8 @@ from datetime import datetime
 import smtplib
 from email.message import EmailMessage
 
-# Initialize OpenAI client with API key
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY") or "your_fallback_key")
+# Initialize OpenAI API key
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # App title
 st.set_page_config(page_title="AI Business Report Generator", layout="wide")
@@ -28,7 +28,6 @@ uploaded_file = st.file_uploader("Upload your financial Excel/CSV file")
 
 if uploaded_file:
     try:
-        # Read file into DataFrame (supports CSV and Excel)
         if uploaded_file.name.endswith('.csv'):
             df = pd.read_csv(uploaded_file, encoding='utf-8')
         else:
@@ -37,13 +36,11 @@ if uploaded_file:
         st.error(f"Error reading file: {e}")
         st.stop()
 
-    # Normalize column names
     df.columns = df.columns.str.strip().str.lower()
 
     st.subheader("📁 Data Preview")
     st.dataframe(df.head(), use_container_width=True)
 
-    # Auto-detect common column names
     sales_col = next((col for col in df.columns if col in ['revenue', 'sales', 'turnover']), None)
     expense_col = next((col for col in df.columns if col in ['expenses', 'costs', 'expenditure']), None)
     date_col = next((col for col in df.columns if 'date' in col), None)
@@ -97,7 +94,7 @@ if uploaded_file:
         summary = ""
         with st.spinner("Generating summary..."):
             try:
-                response = client.chat.completions.create(
+                response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",
                     messages=[
                         {"role": "user", "content": prompt}
@@ -156,6 +153,6 @@ if uploaded_file:
                         st.text(str(e))
 
         st.markdown("---")
-        st.markdown("Developed with ❤️ by adhavan | Contact: adhavansmith49@gmail.com")
+        st.markdown("Developed with ❤️ by adhavan | Contact: you@example.com")
     else:
         st.warning("⚠️ Your file must have columns like 'Date', 'Revenue', and 'Expenses' (or similar names like 'Sales', 'Costs').")
