@@ -9,6 +9,7 @@ from datetime import datetime
 import smtplib
 from email.message import EmailMessage
 from openai import OpenAI
+import re
 
 # App title
 st.set_page_config(page_title="AI Business Report Generator", layout="wide")
@@ -111,17 +112,20 @@ if uploaded_file:
         if st.button("Generate PDF"):
             pdf = FPDF()
             pdf.add_page()
-            pdf.set_font("Arial", size=12)
+            pdf.add_font("ArialUnicode", "", "ArialUnicodeMS.ttf", uni=True)
+            pdf.set_font("ArialUnicode", size=12)
             pdf.set_title("AI Business Report")
             pdf.cell(200, 10, txt="AI Business Report", ln=True, align='C')
             pdf.ln(10)
             pdf.cell(0, 10, txt=f"Date: {datetime.today().strftime('%Y-%m-%d')}", ln=True)
             pdf.multi_cell(0, 10, txt=f"Total Revenue: ₹{total_revenue:,.0f}\nTotal Expenses: ₹{total_expenses:,.0f}\nNet Profit: ₹{profit:,.0f}")
             pdf.ln(5)
-            pdf.set_font("Arial", style='B', size=12)
+            pdf.set_font("ArialUnicode", style='B', size=12)
             pdf.cell(0, 10, txt="Summary:", ln=True)
-            pdf.set_font("Arial", size=12)
-            pdf.multi_cell(0, 10, txt=summary)
+            pdf.set_font("ArialUnicode", size=12)
+
+            clean_summary = re.sub(r'[^\x00-\x7F]+', '', summary)
+            pdf.multi_cell(0, 10, txt=clean_summary)
 
             pdf_output = BytesIO()
             pdf.output(pdf_output)
