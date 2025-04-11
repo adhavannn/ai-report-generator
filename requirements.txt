@@ -4,4 +4,3 @@ matplotlib
 openai
 fpdf
 python-dotenv
-openpyxl
