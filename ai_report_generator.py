@@ -8,7 +8,7 @@ import matplotlib.ticker as ticker
 from datetime import datetime
 import smtplib
 from email.message import EmailMessage
-import openai
+from openai import OpenAI
 
 # App title
 st.set_page_config(page_title="AI Business Report Generator", layout="wide")
@@ -91,10 +91,7 @@ if uploaded_file:
         summary = ""
         with st.spinner("Generating summary..."):
             try:
-                openai.api_key = st.secrets["OPENAI_API_KEY"]
-
-                from openai import OpenAI
-                client = OpenAI(api_key=openai.api_key)
+                client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
                 response = client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=[
