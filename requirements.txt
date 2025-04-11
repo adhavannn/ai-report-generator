@@ -4,3 +4,4 @@ matplotlib
 fpdf
 openpyxl
 openai>=1.0.0
+secure-smtplib
