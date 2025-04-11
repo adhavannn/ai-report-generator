@@ -1,7 +1,8 @@
 streamlit
 pandas
 matplotlib
-openai
 fpdf
-python-dotenv
 openpyxl
+openai>=1.0.0
+transformers
+scikit-learn
