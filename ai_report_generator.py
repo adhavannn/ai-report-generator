@@ -157,3 +157,4 @@ if uploaded_file:
         st.markdown("Developed with ❤️ by adhavan | Contact: you@example.com")
     else:
         st.warning("⚠️ Your file must have columns like 'Date', 'Revenue', and 'Expenses' (or similar names like 'Sales', 'Costs').")
+
