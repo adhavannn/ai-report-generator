@@ -94,7 +94,10 @@ if uploaded_file:
         summary = ""
         with st.spinner("Generating summary..."):
             try:
-                response = openai.ChatCompletion.create(
+                from openai import OpenAI
+                client = OpenAI()
+                
+                response = client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=[
                         {"role": "user", "content": prompt}
