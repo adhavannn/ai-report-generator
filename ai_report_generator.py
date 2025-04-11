@@ -8,6 +8,7 @@ import matplotlib.ticker as ticker
 from datetime import datetime
 import smtplib
 from email.message import EmailMessage
+import openai
 
 # App title
 st.set_page_config(page_title="AI Business Report Generator", layout="wide")
@@ -90,11 +91,8 @@ if uploaded_file:
         summary = ""
         with st.spinner("Generating summary..."):
             try:
-                import openai
-                from openai import OpenAI
-                client = OpenAI()
-
-                response = client.completions.create(
+                openai.api_key = st.secrets["OPENAI_API_KEY"]
+                response = openai.Completion.create(
                     model="gpt-3.5-turbo-instruct",
                     prompt=prompt,
                     max_tokens=300
@@ -103,17 +101,8 @@ if uploaded_file:
                 st.success("Summary generated successfully!")
                 st.write(summary)
             except Exception as e:
-                st.error("⚠️ Error generating summary. Falling back to local model.")
-                try:
-                    from transformers import pipeline
-                    gen = pipeline("text-generation", model="distilgpt2")
-                    result = gen(prompt, max_length=200)[0]['generated_text']
-                    summary = result.split("Write a professional summary")[-1].strip()
-                    st.success("Summary generated using fallback model!")
-                    st.write(summary)
-                except Exception as e2:
-                    st.text("Both AI services failed.")
-                    st.text(str(e2))
+                st.error("⚠️ Error generating summary. Please check your API key or quota.")
+                st.text(str(e))
 
         st.subheader("📄 Download Report as PDF")
         if st.button("Generate PDF"):
