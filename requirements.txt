@@ -3,5 +3,5 @@ pandas
 matplotlib
 fpdf
 openpyxl
-openai>=1.0.0
+openai
 secure-smtplib
