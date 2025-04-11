@@ -3,4 +3,4 @@ pandas
 matplotlib
 fpdf
 openpyxl
-openai>=1.2.0
+openai>=1.0.0
