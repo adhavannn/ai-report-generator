@@ -3,6 +3,4 @@ pandas
 matplotlib
 fpdf
 openpyxl
-openai>=1.0.0
-transformers
-scikit-learn
+openai>=1.2.0
