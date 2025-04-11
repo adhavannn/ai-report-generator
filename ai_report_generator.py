@@ -93,7 +93,9 @@ if uploaded_file:
             try:
                 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-                response = openai.ChatCompletion.create(
+                from openai import OpenAI
+                client = OpenAI(api_key=openai.api_key)
+                response = client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=[
                         {"role": "system", "content": "You are a financial analyst."},
@@ -101,7 +103,7 @@ if uploaded_file:
                     ],
                     max_tokens=300
                 )
-                summary = response['choices'][0]['message']['content'].strip()
+                summary = response.choices[0].message.content.strip()
                 st.success("✅ Summary generated successfully!")
                 st.write(summary)
 
@@ -157,4 +159,3 @@ if uploaded_file:
         st.markdown("Developed with ❤️ by adhavan | Contact: you@example.com")
     else:
         st.warning("⚠️ Your file must have columns like 'Date', 'Revenue', and 'Expenses' (or similar names like 'Sales', 'Costs').")
-
