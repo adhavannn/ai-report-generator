@@ -1,33 +1,27 @@
-# 📊 AI Business Report Generator (Streamlit App)
+# 📊 AI Business Report Generator (for CA Firms & SMEs)
 
-A powerful AI-powered tool designed for **CA firms**, **finance consultants**, and **SMEs** to instantly analyze financial data and generate a professional business summary + PDF report.
+This is a Streamlit-powered web app that analyzes financial data (from Excel or CSV files) and generates a business report. It includes AI-generated insights using OpenAI's GPT-3.5 model and allows users to download the analysis as a PDF or receive it via email.
 
 ---
 
 ## 🚀 Features
 
-- 📁 Upload Excel or CSV files
-- 📈 Automatically extract revenue, expenses, and profit
-- 📊 Visualize revenue trends over time
-- 🧠 Generate AI-powered financial summary using OpenAI
-- 📄 Download detailed business report as a PDF
-- 📧 Optional email report feature
+- Upload `.csv` or `.xlsx` financial data
+- Automatic detection of key columns like **Revenue**, **Expenses**, and **Date**
+- Visualizes revenue trends over time
+- Calculates **Total Revenue**, **Expenses**, and **Net Profit**
+- Uses GPT-3.5 to generate a professional summary
+- Exports the analysis to a **PDF**
+- Optionally send the PDF to an email address
+- Built with ❤️ using **Streamlit**, **Pandas**, **Matplotlib**, **FPDF**, and **OpenAI API**
 
 ---
 
-## 📂 How to Use
+## 📁 How to Run Locally
 
-1. **Upload** your financial data (CSV or Excel)
-2. **View summary** of revenue, expenses & net profit
-3. **See charts** of revenue over time
-4. **Get AI Summary** powered by GPT
-5. **Download** the PDF report or send via email
+### 1. Clone the Repository
 
----
-
-## 🛠️ Setup Locally
-
-1. Clone the repo:
 ```bash
-git clone https://github.com/your-username/ai-report-generator.git
+git clone https://github.com/adhavannn/ai-report-generator.git
 cd ai-report-generator
+
